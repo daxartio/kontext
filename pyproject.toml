@@ -18,7 +18,10 @@ license = "MIT"
 readme = "README.md"
 repository = "https://github.com/daxartio/ctx"
 homepage = "https://pypi.org/project/ctx"
-keywords = []
+keywords = ["contextvar", "logging", "context-logging"]
+
+[tool.poetry.urls]
+Changelog = "https://github.com/daxartio/ctx/blob/main/CHANGELOG.md"
 
 [tool.poetry.dependencies]
 python = "^3.7.1"
