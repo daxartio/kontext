@@ -51,12 +51,12 @@ ignore_missing_imports = true
 no_implicit_optional = true
 
 [[tool.mypy.overrides]]
-module = "tests.*"
+module = ["tests.*", "examples.*"]
 disallow_untyped_defs = false
 disallow_incomplete_defs = false
 
 [tool.coverage.run]
-omit = ["tests/*", "**/__main__.py", "**/.venv/*", "**/site-packages/*"]
+omit = ["tests/*", "**/__main__.py", "**/.venv/*", "**/site-packages/*", "examples/*"]
 branch = true
 
 [tool.coverage.report]

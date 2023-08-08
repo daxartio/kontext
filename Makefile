@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := help
-CODE = ctx tests
+CODE = ctx tests examples
 POETRY_RUN = poetry run
 TEST = $(POETRY_RUN) pytest $(args)
 

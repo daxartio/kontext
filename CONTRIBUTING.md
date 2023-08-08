@@ -6,11 +6,24 @@ Welcome! Happy to see you willing to make the project better.
 
 ## Getting started
 
-### Task runner
-
-- [Make](https://en.wikipedia.org/wiki/Make_(software))
-
 ### Install
+
+**Activate virtual environment**
+
+```
+python -m venv .venv
+```
+
+**Install poetry**
+
+```
+make install-poetry
+# pip install poetry
+```
+
+Don't forget to use last version of poetry!
+
+**Install dependencies**
 
 ```
 make install
