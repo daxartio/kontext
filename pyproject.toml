@@ -3,7 +3,7 @@ name = "cz_conventional_commits"
 version = "1.0.0"
 tag_format = "$version"
 version_files = [
-    "ctx/_version.py",
+    "ctx/__init__.py",
     "pyproject.toml:version"
 ]
 bump_message = "chore(release): version $current_version → $new_version"

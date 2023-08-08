@@ -7,16 +7,8 @@
 
 ## Installation
 
-### pip
-
 ```
 pip install ctx
-```
-
-### poetry
-
-```
-poetry add ctx
 ```
 
 ## Usage
