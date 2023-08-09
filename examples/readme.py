@@ -20,5 +20,7 @@ def foo():
 
 setup_log_record()
 foo()
+logger.info("Finish")
 # foo {'key': 'value'}
 # bar {'key': 'value', 'foo': 'bar'}
+# Finish {}
