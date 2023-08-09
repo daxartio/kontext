@@ -10,7 +10,7 @@ def record_factory(
 ) -> Callable[..., logging.LogRecord]:
     def create_record(*args: Any, **kwargs: Any) -> logging.LogRecord:
         record = old_factory(*args, **kwargs)
-        record.ctx = context.copy()
+        record.kontext = context.copy()
         return record
 
     return create_record

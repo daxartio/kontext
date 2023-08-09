@@ -12,9 +12,9 @@ Finish {'b': 3, 'c': 3}
 import logging
 from threading import Thread, current_thread
 
-from ctx import Context, current_context, setup_log_record
+from kontext import Context, current_context, setup_log_record
 
-logging.basicConfig(format="%(message)s %(ctx)s", level=logging.INFO)
+logging.basicConfig(format="%(message)s %(kontext)s", level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 

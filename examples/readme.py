@@ -1,8 +1,8 @@
 import logging
 
-from ctx import Context, current_context, setup_log_record
+from kontext import Context, current_context, setup_log_record
 
-logging.basicConfig(format="%(message)s %(ctx)s", level=logging.INFO)
+logging.basicConfig(format="%(message)s %(kontext)s", level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 

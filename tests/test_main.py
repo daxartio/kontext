@@ -3,7 +3,7 @@ from threading import Thread
 
 import pytest
 
-from ctx.main import (
+from kontext.main import (
     AbstractContext,
     Context,
     ContextDataProtocol,
@@ -93,7 +93,7 @@ def test_custom_context():
         AbstractContext,
         metaclass=ContextFactory,
         default_cls=dict,
-        ctx=var,
+        kontext=var,
     ):
         pass
 
@@ -101,7 +101,7 @@ def test_custom_context():
         ContextProxy,
         metaclass=ContextFactory,
         default_cls=dict,
-        ctx=var,
+        kontext=var,
     ):
         pass
 

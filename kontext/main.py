@@ -40,7 +40,7 @@ class ContextFactory(type):
         name: str,
         bases: Tuple[Any],
         attrs: Dict[str, Any],
-        ctx: Optional[ContextVar[ContextDataProtocol]] = None,
+        kontext: Optional[ContextVar[ContextDataProtocol]] = None,
         default_cls: Optional[Type[ContextDataProtocol]] = None,
     ) -> Any:
         return super().__new__(
@@ -49,7 +49,7 @@ class ContextFactory(type):
             bases,
             {
                 **attrs,
-                "_ctx": ctx or _context,
+                "_kontext": kontext or _context,
                 "_default_cls": default_cls or ContextData,
             },
         )
@@ -57,7 +57,7 @@ class ContextFactory(type):
 
 class ContextMeta:  # pragma: no cover
     @property
-    def _ctx(self) -> ContextVar[ContextDataProtocol]:
+    def _kontext(self) -> ContextVar[ContextDataProtocol]:
         raise NotImplementedError
 
     @property
@@ -94,10 +94,10 @@ class AbstractContext(ContextMeta):
         return sync_inner
 
     def __enter__(self) -> None:
-        data = _get_or_default(self._ctx, self._default_cls)
+        data = _get_or_default(self._kontext, self._default_cls)
         new_data = data.copy()
         new_data.update(data)
-        self._token = self._ctx.set(new_data)
+        self._token = self._kontext.set(new_data)
 
     def __exit__(
         self,
@@ -105,7 +105,7 @@ class AbstractContext(ContextMeta):
         exc_value: Optional[Exception],
         traceback: Any,
     ) -> None:
-        self._ctx.reset(self._token)
+        self._kontext.reset(self._token)
 
 
 class Context(AbstractContext, metaclass=ContextFactory):
@@ -128,19 +128,19 @@ class ContextProxyProtocol(Protocol):  # pragma: no cover
 
 class AbstractContextProxy(ContextMeta):
     def __setitem__(self, key: Any, item: Any) -> None:
-        data = _get_or_default(self._ctx, self._default_cls)
+        data = _get_or_default(self._kontext, self._default_cls)
         data[key] = item
 
     def __getitem__(self, key: Any) -> Any:
-        data = _get_or_default(self._ctx, self._default_cls)
+        data = _get_or_default(self._kontext, self._default_cls)
         return data[key]
 
     def __repr__(self) -> str:
-        data = _get_or_default(self._ctx, self._default_cls)
+        data = _get_or_default(self._kontext, self._default_cls)
         return data.__repr__()
 
     def copy(self) -> ContextDataProtocol:
-        data = _get_or_default(self._ctx, self._default_cls)
+        data = _get_or_default(self._kontext, self._default_cls)
         return data.copy()
 
 
@@ -151,10 +151,10 @@ class ContextProxy(AbstractContextProxy, metaclass=ContextFactory):
 current_context = ContextProxy()
 
 
-def _get_or_default(ctx: ContextVar[CT], default_cls: Type[CT]) -> CT:
+def _get_or_default(kontext: ContextVar[CT], default_cls: Type[CT]) -> CT:
     try:
-        return ctx.get()
+        return kontext.get()
     except LookupError:
         data = default_cls()
-        ctx.set(data)
+        kontext.set(data)
         return data

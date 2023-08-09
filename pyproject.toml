@@ -3,25 +3,25 @@ name = "cz_conventional_commits"
 version = "1.0.0"
 tag_format = "$version"
 version_files = [
-    "ctx/__init__.py",
+    "kontext/__init__.py",
     "pyproject.toml:version"
 ]
 bump_message = "chore(release): version $current_version → $new_version"
 update_changelog_on_bump = true
 
 [tool.poetry]
-name = "ctx"
+name = "kontext"
 version = "1.0.0"
 description = "Easy contextual information logging"
 authors = ["Danil Akhtarov <daxartio@gmail.com>"]
 license = "MIT"
 readme = "README.md"
-repository = "https://github.com/daxartio/ctx"
-homepage = "https://pypi.org/project/ctx"
+repository = "https://github.com/daxartio/kontext"
+homepage = "https://pypi.org/project/kontext"
 keywords = ["contextvar", "logging", "context-logging"]
 
 [tool.poetry.urls]
-Changelog = "https://github.com/daxartio/ctx/blob/main/CHANGELOG.md"
+Changelog = "https://github.com/daxartio/kontext/blob/main/CHANGELOG.md"
 
 [tool.poetry.dependencies]
 python = "^3.7.1"

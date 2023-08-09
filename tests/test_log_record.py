@@ -1,6 +1,6 @@
 import logging
 
-from ctx.log_record import setup_log_record
+from kontext.log_record import setup_log_record
 
 logger = logging.getLogger(__name__)
 

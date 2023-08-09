@@ -1,9 +1,9 @@
 # Python Context Information
 
-[![PyPI](https://img.shields.io/pypi/v/ctx)](https://pypi.org/project/ctx/)
-[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/ctx)](https://www.python.org/downloads/)
-[![GitHub last commit](https://img.shields.io/github/last-commit/daxartio/ctx)](https://github.com/daxartio/ctx)
-[![GitHub stars](https://img.shields.io/github/stars/daxartio/ctx?style=social)](https://github.com/daxartio/ctx)
+[![PyPI](https://img.shields.io/pypi/v/kontext)](https://pypi.org/project/kontext/)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/kontext)](https://www.python.org/downloads/)
+[![GitHub last commit](https://img.shields.io/github/last-commit/daxartio/kontext)](https://github.com/daxartio/kontext)
+[![GitHub stars](https://img.shields.io/github/stars/daxartio/kontext?style=social)](https://github.com/daxartio/kontext)
 
 The plugin allows to transfer a context between functions. Inspired by [context-logging](https://github.com/Afonasev/context_logging).
 
@@ -12,7 +12,7 @@ You can use it for logging data which does not change and can be correlated, e.g
 ## Installation
 
 ```
-pip install ctx
+pip install kontext
 ```
 
 ## Usage
@@ -20,9 +20,9 @@ pip install ctx
 ```python
 import logging
 
-from ctx import Context, current_context, setup_log_record
+from kontext import Context, current_context, setup_log_record
 
-logging.basicConfig(format="%(message)s %(ctx)s", level=logging.INFO)
+logging.basicConfig(format="%(message)s %(kontext)s", level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
