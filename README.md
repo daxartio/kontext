@@ -9,6 +9,12 @@ The plugin allows to transfer a context between functions. Inspired by [context-
 
 You can use it for logging data which does not change and can be correlated, e.g. `trace_id`, `correlation_id` etc.
 
+## Features
+
+- Thread-safe context management
+- Customizable log records
+- Easy-to-use API
+
 ## Installation
 
 ```
@@ -46,6 +52,8 @@ logger.info("Finish")
 # Finish {}
 
 ```
+
+For more examples, please refer to the examples directory.
 
 ## License
 
