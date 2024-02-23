@@ -5,10 +5,10 @@ import pytest
 
 from kontext.main import (
     AbstractContext,
+    AbstractContextProxy,
     Context,
     ContextDataProtocol,
     ContextFactory,
-    ContextProxy,
     current_context,
 )
 
@@ -98,7 +98,7 @@ def test_custom_context():
         pass
 
     class CustomContextProxy(
-        ContextProxy,
+        AbstractContextProxy,
         metaclass=ContextFactory,
         default_cls=dict,
         kontext=var,

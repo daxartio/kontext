@@ -40,8 +40,8 @@ class ContextFactory(type):
         name: str,
         bases: Tuple[Any],
         attrs: Dict[str, Any],
-        kontext: Optional[ContextVar[ContextDataProtocol]] = None,
-        default_cls: Optional[Type[ContextDataProtocol]] = None,
+        kontext: Optional[ContextVar[ContextDataProtocol]],
+        default_cls: Optional[Type[ContextDataProtocol]],
     ) -> Any:
         return super().__new__(
             cls,
@@ -108,7 +108,12 @@ class AbstractContext(ContextMeta):
         self._kontext.reset(self._token)
 
 
-class Context(AbstractContext, metaclass=ContextFactory):
+class Context(
+    AbstractContext,
+    metaclass=ContextFactory,
+    kontext=_context,
+    default_cls=ContextData,
+):
     pass
 
 
@@ -144,7 +149,12 @@ class AbstractContextProxy(ContextMeta):
         return data.copy()
 
 
-class ContextProxy(AbstractContextProxy, metaclass=ContextFactory):
+class ContextProxy(
+    AbstractContextProxy,
+    metaclass=ContextFactory,
+    kontext=_context,
+    default_cls=ContextData,
+):
     pass
 
 
