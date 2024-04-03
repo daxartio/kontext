@@ -66,33 +66,6 @@ class ContextMeta:  # pragma: no cover
 
 
 class AbstractContext(ContextMeta):
-    @overload
-    def __call__(self, func: Callable[P, Awaitable[R]]) -> Callable[P, Awaitable[R]]:
-        ...  # pragma: no cover
-
-    @overload
-    def __call__(self, func: Callable[P, R]) -> Callable[P, R]:
-        ...  # pragma: no cover
-
-    def __call__(
-        self, func: Callable[P, R]
-    ) -> Union[Callable[P, Awaitable[R]], Callable[P, R]]:
-        if iscoroutinefunction(func):
-
-            @wraps(func)
-            async def async_inner(*args: P.args, **kwargs: P.kwargs) -> R:
-                with self:
-                    return await func(*args, **kwargs)  # type: ignore
-
-            return async_inner
-
-        @wraps(func)
-        def sync_inner(*args: P.args, **kwargs: P.kwargs) -> R:
-            with self:
-                return func(*args, **kwargs)
-
-        return sync_inner
-
     def __enter__(self) -> None:
         data = _get_or_default(self._kontext, self._default_cls)
         new_data = data.copy()
@@ -114,7 +87,32 @@ class Context(
     kontext=_context,
     default_cls=ContextData,
 ):
-    pass
+    @overload
+    def __call__(self, func: Callable[P, Awaitable[R]]) -> Callable[P, Awaitable[R]]:
+        ...  # pragma: no cover
+
+    @overload
+    def __call__(self, func: Callable[P, R]) -> Callable[P, R]:
+        ...  # pragma: no cover
+
+    def __call__(
+        self, func: Callable[P, R]
+    ) -> Union[Callable[P, Awaitable[R]], Callable[P, R]]:
+        if iscoroutinefunction(func):
+
+            @wraps(func)
+            async def async_inner(*args: P.args, **kwargs: P.kwargs) -> R:
+                with Context():
+                    return await func(*args, **kwargs)  # type: ignore
+
+            return async_inner
+
+        @wraps(func)
+        def sync_inner(*args: P.args, **kwargs: P.kwargs) -> R:
+            with Context():
+                return func(*args, **kwargs)
+
+        return sync_inner
 
 
 class ContextProxyProtocol(Protocol):  # pragma: no cover
