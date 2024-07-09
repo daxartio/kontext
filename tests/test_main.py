@@ -113,3 +113,15 @@ def test_custom_context():
 
         with pytest.raises(KeyError):
             _ = current_context["key"]
+
+
+def test_context_update():
+    current_context["key"] = "origin"
+
+    with Context():
+        current_context["key"] = "value"
+        current_context.update(key="value2", foo="bar")
+        assert current_context["key"] == "value2"
+        assert current_context["foo"] == "bar"
+
+    assert current_context["key"] == "origin"

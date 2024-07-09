@@ -11,13 +11,19 @@ from typing_extensions import Awaitable, ParamSpec, Protocol
 R = TypeVar("R")
 P = ParamSpec("P")
 CT = TypeVar("CT")
+VT = TypeVar("VT")
 
 
 class ContextDataProtocol(Protocol):  # pragma: no cover
     def copy(self) -> "ContextDataProtocol":
         ...
 
+    @overload
     def update(self, other: "ContextDataProtocol") -> None:
+        ...
+
+    @overload
+    def update(self, **kwargs: VT) -> None:
         ...
 
     def __setitem__(self, key: Any, item: Any) -> None:
@@ -128,6 +134,9 @@ class ContextProxyProtocol(Protocol):  # pragma: no cover
     def copy(self) -> ContextDataProtocol:
         ...
 
+    def update(self, **kwargs: ContextDataProtocol) -> None:
+        ...
+
 
 class AbstractContextProxy(ContextMeta):
     def __setitem__(self, key: Any, item: Any) -> None:
@@ -145,6 +154,10 @@ class AbstractContextProxy(ContextMeta):
     def copy(self) -> ContextDataProtocol:
         data = _get_or_default(self._kontext, self._default_cls)
         return data.copy()
+
+    def update(self, **kwargs: VT) -> None:
+        data = _get_or_default(self._kontext, self._default_cls)
+        data.update(**kwargs)
 
 
 class ContextProxy(
