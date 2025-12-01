@@ -1,7 +1,7 @@
 .DEFAULT_GOAL := help
 CODE = kontext tests examples
-POETRY_RUN = poetry run
-TEST = $(POETRY_RUN) pytest $(args)
+UV_RUN = uv run --group dev
+TEST = $(UV_RUN) pytest $(args)
 
 .PHONY: help
 help: ## Show help
@@ -10,21 +10,14 @@ help: ## Show help
 .PHONY: all
 all: format lint test  ## Run format lint test
 
-.PHONY: install-poetry
-install-poetry:  ## Install poetry
-	pip install poetry
-
 .PHONY: install
 install:  ## Install dependencies
-	poetry install
-
-.PHONY: install-docs
-install-docs:  ## Install docs dependencies
-	poetry install --only docs
+	uv sync --group dev
 
 .PHONY: publish
 publish:  ## Publish package
-	@poetry publish --build --no-interaction --username=$(pypi_username) --password=$(pypi_password)
+	uv build
+	uv publish --username=$(pypi_username) --password=$(pypi_password)
 
 .PHONY: test
 test:  ## Test with coverage
@@ -45,20 +38,17 @@ test-report:  ## Report testing
 
 .PHONY: lint
 lint:  ## Check code
-	$(POETRY_RUN) ruff $(CODE)
-	$(POETRY_RUN) black --check $(CODE)
-	$(POETRY_RUN) pytest --dead-fixtures --dup-fixtures
-	$(POETRY_RUN) mypy $(CODE)
+	$(UV_RUN) ruff check $(CODE)
+	$(UV_RUN) ruff format $(CODE) --check
+	$(UV_RUN) mypy $(CODE)
 
 .PHONY: format
 format:  ## Formatting code
-	$(POETRY_RUN) ruff --fix-only $(CODE)
-	$(POETRY_RUN) black $(CODE)
-
+	$(UV_RUN) ruff format $(CODE)
 
 .PHONY: bump
 bump:  ## Bump version (commit and tag)
-	$(POETRY_RUN) cz bump
+	$(UV_RUN) cz bump
 
 .PHONY: clean
 clean:  ## Clean

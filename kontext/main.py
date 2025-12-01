@@ -15,22 +15,17 @@ VT = TypeVar("VT")
 
 
 class ContextDataProtocol(Protocol):  # pragma: no cover
-    def copy(self) -> "ContextDataProtocol":
-        ...
+    def copy(self) -> "ContextDataProtocol": ...
 
     @overload
-    def update(self, other: "ContextDataProtocol") -> None:
-        ...
+    def update(self, other: "ContextDataProtocol") -> None: ...
 
     @overload
-    def update(self, **kwargs: VT) -> None:
-        ...
+    def update(self, **kwargs: VT) -> None: ...
 
-    def __setitem__(self, key: Any, item: Any) -> None:
-        ...
+    def __setitem__(self, key: Any, item: Any) -> None: ...
 
-    def __getitem__(self, key: Any) -> Any:
-        ...
+    def __getitem__(self, key: Any) -> Any: ...
 
 
 class ContextData(UserDict):  # type: ignore
@@ -94,12 +89,12 @@ class Context(
     default_cls=ContextData,
 ):
     @overload
-    def __call__(self, func: Callable[P, Awaitable[R]]) -> Callable[P, Awaitable[R]]:
-        ...  # pragma: no cover
+    def __call__(
+        self, func: Callable[P, Awaitable[R]]
+    ) -> Callable[P, Awaitable[R]]: ...  # pragma: no cover
 
     @overload
-    def __call__(self, func: Callable[P, R]) -> Callable[P, R]:
-        ...  # pragma: no cover
+    def __call__(self, func: Callable[P, R]) -> Callable[P, R]: ...  # pragma: no cover
 
     def __call__(
         self, func: Callable[P, R]
@@ -122,20 +117,15 @@ class Context(
 
 
 class ContextProxyProtocol(Protocol):  # pragma: no cover
-    def __setitem__(self, key: Any, item: Any) -> None:
-        ...
+    def __setitem__(self, key: Any, item: Any) -> None: ...
 
-    def __getitem__(self, key: Any) -> Any:
-        ...
+    def __getitem__(self, key: Any) -> Any: ...
 
-    def __repr__(self) -> str:
-        ...
+    def __repr__(self) -> str: ...
 
-    def copy(self) -> ContextDataProtocol:
-        ...
+    def copy(self) -> ContextDataProtocol: ...
 
-    def update(self, **kwargs: ContextDataProtocol) -> None:
-        ...
+    def update(self, **kwargs: ContextDataProtocol) -> None: ...
 
 
 class AbstractContextProxy(ContextMeta):
